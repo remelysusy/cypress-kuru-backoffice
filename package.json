@@ -1,0 +1,22 @@
+{
+  "name": "cypress-kuru-backoffice",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ricardofanetto/kuru-backoffice"
+  },
+  "version": "0.0.1",
+  "description": "",
+  "engines": {
+    "node": "14.16.0"
+  },
+  "scripts": {
+    "cypress:dev:run": "cypress run --browser chrome --env host_api=https://backoffice-test.kuru.com.br",
+    "cypress:dev:open": "cypress open --browser chrome --env host_api=https://backoffice-test.kuru.com.br"
+  },
+  "author": "RSI Tecnologia (https://rsitecnologia.com)",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "cypress": "^7.0.1"
+  } 
+}

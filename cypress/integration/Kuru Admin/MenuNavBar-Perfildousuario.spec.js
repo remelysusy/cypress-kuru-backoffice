@@ -1,0 +1,60 @@
+
+/// <reference types="Cypress" />
+describe('Validação das ações no Menu Perfil do Usuário', () => {
+    beforeEach(() => {
+        cy.prepararTeste(true)
+    })
+    it('devo conseguir salvar as alterações no perfil do usuário', () => {
+        cy.get('#txtMail').type('test-user-rsi@rsitecnologia.com.br')
+        cy.get('#txtPassword').type('123456')
+        cy.get('#btnLogin').click()
+        cy.get('#slcYourCompany', { timeout: 10000 }).should('be.visible')
+        cy.get('.call-action-text').contains('Olá bem vindo de volta')
+        cy.get('#slcYourCompany').select('cheff kuru')
+        cy.get('.navbar-brand', { timeout: 10000 }).should('be.visible')
+        cy.get('.dropdown-toggle.nav-link').click()
+        cy.get('.dropdown-navbar > :nth-child(1) > :nth-child(2)').click()
+        cy.get('.card-header', { timeout: 10000 }).should('be.visible').contains('Editando')
+        cy.get('#txtName').should('have.value', 'Test User RSI')
+        cy.get('#txtName').clear()
+        cy.get('#txtName').type('Remely')
+        cy.get('#txtMail').should('have.value', 'test-user-rsi@rsitecnologia.com.br')
+        cy.get('#txtMail').clear()
+        cy.get('#txtMail').type('test-user-rsi@rsitecnologia.com.br')
+        cy.get('.card-footer > .btn').click()
+        cy.get('#toast-container div', { timeout: 10000 }).should('be.visible').contains('Usuário salvo com sucesso')
+    })
+
+    it('devo validar a mensagem de alerta quando os campos do perfil usuário está vazio', () => {
+        cy.get('#txtMail').type('test-user-rsi@rsitecnologia.com.br')
+        cy.get('#txtPassword').type('123456')
+        cy.get('#btnLogin').click()
+        cy.get('#slcYourCompany', { timeout: 10000 }).should('be.visible')
+        cy.get('.call-action-text').contains('Olá bem vindo de volta')
+        cy.get('#slcYourCompany').select('cheff kuru')
+        cy.get('.navbar-brand', { timeout: 10000 }).should('be.visible')
+        cy.get('.dropdown-toggle.nav-link').click()
+        cy.get('.dropdown-navbar > :nth-child(1) > :nth-child(2)').click()
+        cy.get('.card-header', { timeout: 10000 }).should('be.visible').contains('Editando')
+        cy.get('#txtName').should('have.value','Test User RSI')
+        cy.get('#txtName').clear()
+        cy.get('.card-footer > .btn').click()
+        cy.get('#toast-container div', { timeout: 10000 }).should('be.visible').contains('"Nome" não pode estar vazio')
+
+    })
+    it('devo conseguir sair do sistema quando pressionado o botão sair', () => {
+
+        cy.get('#txtMail').type('test-user-rsi@rsitecnologia.com.br')
+        cy.get('#txtPassword').type('123456')
+        cy.get('#btnLogin').click()
+        cy.get('#slcYourCompany', { timeout: 10000 }).should('be.visible')
+        cy.get('.call-action-text').contains('Olá bem vindo de volta')
+        cy.get('#slcYourCompany').select('cheff kuru')
+        cy.get('.navbar-brand', { timeout: 10000 }).should('be.visible')
+        cy.get('.dropdown-toggle.nav-link').click()
+        cy.get('.dropdown-navbar > :nth-child(3) > .dropdown-item').should('be.visible').contains('Sair')
+        cy.get('.dropdown-navbar > :nth-child(3) > .dropdown-item').click()
+        cy.title().should('contain', 'Kuru')
+
+    })
+})
